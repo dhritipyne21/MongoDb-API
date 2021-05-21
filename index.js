@@ -22,12 +22,26 @@ const books = require('./books')
     
 //console.log(process.argv)
 //console.log(_yargs.argv)
+var c=cmd._[0]
+switch(c){
+    case 'add':
+        break;
+    case 'show':
+        break;
+    case 'delete':
+        break;
+    case 'find':
+        break;
+    default:
+        break;
+
+}
 
 console.log(cmd)
 if(cmd._[0] === 'add')
 {
-    var book_id=Math.floor(Math.random()*1000) 
-    books.add({book_id:book_id, title: cmd.title, category: cmd.category})
+    const book_id=Math.floor(Math.random()*1000) 
+    const res=books.add({book_id:book_id, title: cmd.title, category: cmd.category})
     
 }
 else if(cmd._[0] === 'delete')
@@ -36,7 +50,23 @@ else if(cmd._[0] === 'delete')
 }
 else if(cmd._[0] === 'show')
 {
-   books.list()
+   books.filter({}).then((data)=>{
+    data.forEach( item => console.log(item.book_id+" || "+item.title+" || "+item.category))
+   })
+   console.log("Books Collection:")
+ // console.log(result)
+   
+}
+else if(cmd._[0] === 'find')
+{
+   books.filter({title:cmd.title})
+}
+else if(cmd._[0] === 'edit')
+{
+    const book_id=cmd.book_id
+    const title=cmd.title
+    const category=cmd.category
+    books.update({book_id,title,category})
 }
 else
 {
